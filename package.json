@@ -1,0 +1,21 @@
+{
+  "name": "pokemon-catcher",
+  "version": "1.0.0",
+  "description": "Catching pokemons in a 2D grid",
+  "main": "src/catch-pokemon.js",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest ./test --noStackTrace"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^25.4.0"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-node",
+    "transform": {}
+  },
+  "bin": {
+    "pokemon-catcher": "bin/start.js"
+  }
+}
