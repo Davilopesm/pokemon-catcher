@@ -28,10 +28,15 @@ describe("Catch Pokemon - Integration Test", () => {
   });
 
   it.each`
-    input            | result
-    ${"E"}           | ${"2"}
-    ${"NESO"}        | ${"4"}
-    ${"NSNSNSNSNS"}  | ${"2"}
+    input                               | result
+    ${"E"}                              | ${"2"}
+    ${"NESO"}                           | ${"4"}
+    ${"NSNSNSNSNS"}                     | ${"2"}
+    ${"NESOSSSONNNE"}                   | ${"11"}
+    ${"NESOSSSONNNOSSS"}                | ${"15"}
+    ${"SSSSSSS"}                        | ${"8"}
+    ${"SSSSSSSOOOOOOONNNNEEEEEEEE"}     | ${"26"}
+    ${"SSSSSSSOOOOOOONNNNEEEEEEEENNNO"} | ${"29"}
   `("Should log correct result $result when input is $input", async ({input, result})=> {
     const { stdout } = await exec(`pokemon-catcher ${input}`);
     expect(stdout).toEqual(

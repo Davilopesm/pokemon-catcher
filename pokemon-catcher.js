@@ -26,27 +26,35 @@ export const execute = (processArguments) => {
 
   if(!validateMovements(playerMovements)) return;
 
+  const caughtPokemonsPosition = new Set().add("0-0"); // Keeping track of found pokemons, first pokemon is always found and captured
   let maxPokemonsFound = playerMovements.length + 1;
+  let ashesPosition = [0, 0];
 
-  const AVAILABLE_PATHS = {
-    "N": [0, -1],
-    'S': [0, 1],
-    'E': [1, 0],
-    'O': [-1, 0],
-  }
-  
-  const wasPokemonAlreadyCatch = new Map();
-  const ashesPosition = [0, 0];
-  wasPokemonAlreadyCatch.set(String(ashesPosition), 1);
-  
-  for (let i = 0; i < playerMovements.length; i++) {
-    ashesPosition[0] += AVAILABLE_PATHS[playerMovements[i]][0];
-    ashesPosition[1] += AVAILABLE_PATHS[playerMovements[i]][1];
+  for(const movement of playerMovements) {
+    let [eastWestPosition, northSouthPosition] = ashesPosition;
+    switch(movement) {
+      case 'N':
+        northSouthPosition++;
+        break;
+      case 'S':
+        northSouthPosition--;
+        break;
+      case 'O':
+        eastWestPosition++;
+        break;
+      case 'E':
+        eastWestPosition--;
+        break;
+    }
 
-    if (wasPokemonAlreadyCatch.has(String(ashesPosition))) {
+    const ashesNewPosition = `${eastWestPosition}-${northSouthPosition}`;
+    ashesPosition = [ eastWestPosition, northSouthPosition ];
+
+    if (caughtPokemonsPosition.has(ashesNewPosition)) { //If Ashe current position was already seen we cant count that as a newly found pokemon
       maxPokemonsFound--;
+      continue;
     };
-    wasPokemonAlreadyCatch.set(String(ashesPosition), 1);
+    caughtPokemonsPosition.add(ashesNewPosition);
   }
 
   console.log(maxPokemonsFound);
